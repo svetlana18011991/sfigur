@@ -1,1 +1,892 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Флеш-карточки: Площади фигур</title>
+<style>
+  body {
+    background-color: #121212;
+    padding: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
+  .main-title {
+    text-align: center;
+    color: #ffcc00;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    text-shadow: 0 0 20px rgba(255, 102, 0, 0.6);
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .card-container {
+    perspective: 1000px;
+    height: 380px; 
+    cursor: pointer;
+  }
+
+  .flashcard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .card-container.flipped .flashcard {
+    transform: rotateY(180deg);
+  }
+
+  .front, .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    background-color: #1e1e1e;
+    border: 2px solid #ff9900;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+    color: #ffffff;
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  .back {
+    transform: rotateY(180deg);
+  }
+
+  .card-header {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffcc00;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .svg-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .question-text {
+    font-size: 1.1em;
+    color: #cccccc;
+    margin-bottom: 10px;
+  }
+
+  .formula {
+    font-size: 1.6em;
+    color: #ff6600;
+    margin: 20px 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .math-var {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-weight: normal;
+  }
+
+  /* Исправленные стили для корня */
+  .sqrt {
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .sqrt-sign {
+    font-size: 1.1em;
+    margin-right: -1px;
+    vertical-align: middle;
+  }
+  .sqrt-content {
+    border-top: 2px solid #ff6600;
+    padding-top: 2px;
+    display: inline-block;
+  }
+
+  sub, sup {
+    font-size: 0.6em !important;
+    position: relative;
+    line-height: 0;
+  }
+  sub { bottom: -0.4em; }
+  sup { top: -0.6em; }
+
+  .fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 0.8em;
+    margin: 0 4px;
+  }
+
+  .numerator {
+    border-bottom: 2px solid #ff6600;
+    padding: 0 5px;
+  }
+
+  .denominator {
+    padding: 0 5px;
+  }
+
+  .description {
+    font-size: 0.85em;
+    line-height: 1.4;
+    color: #cccccc;
+    margin-bottom: 10px;
+  }
+
+  .card-footer {
+    font-size: 0.7em;
+    color: #888888;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1 class="main-title">Площади фигур</h1>
+
+<div class="card-grid">
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="10,80 90,80 30,20" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="30" y1="20" x2="30" y2="80" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
+            <text x="35" y="55" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">h</text>
+            <text x="43" y="60" fill="#ffcc00" font-size="10" font-family="Times New Roman" font-style="italic">a</text>
+            <line x1="10" y1="80" x2="90" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &middot; <span class="math-var">a</span> &middot; <span class="math-var">h<sub>a</sub></span>
+          </div>
+          <p class="description">Половина произведения стороны на высоту, проведённую к этой стороне.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="10,80 90,80 40,20" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="10" y1="80" x2="40" y2="20" stroke="#ff9900" stroke-width="3"/>
+            <line x1="10" y1="80" x2="90" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <path d="M 25 80 A 15 15 0 0 0 16.7 66.6" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <text x="35" y="75" fill="#ffcc00" font-size="14">&gamma;</text>
+            <text x="15" y="50" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &middot; <span class="math-var">a</span> &middot; <span class="math-var">b</span> &middot; sin &gamma;
+          </div>
+          <p class="description">Половина произведения двух сторон на синус угла между ними.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="10,80 90,80 40,20" stroke="#ff9900" fill="none" stroke-width="3"/>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="15" y="50" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="75" y="50" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">c</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula" style="font-size: 1.5em;">
+            S = <span class="sqrt"><span class="sqrt-sign">&radic;</span><span class="sqrt-content"><span class="math-var">p(p - a)(p - b)(p - c)</span></span></span>
+          </div>
+          <p class="description">Корень из произведения полупериметра (<span class="math-var">p</span>) и его разностей с каждой из сторон.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="10,80 90,80 50,10" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <circle cx="50" cy="58" r="22" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="50" y1="58" x2="50" y2="80" stroke="#ff9900" stroke-width="2"/>
+            <text x="55" y="72" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">r</text>
+            <text x="50" y="98" fill="#ffcc00" font-size="13" text-anchor="middle" font-family="Times New Roman" font-style="italic">P = a + b + c</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <span class="math-var">p</span> &middot; <span class="math-var">r</span>
+          </div>
+          <p class="description">Произведение полупериметра (<span class="math-var">p</span>) на радиус вписанной окружности (<span class="math-var">r</span>).</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <circle cx="50" cy="50" r="40" stroke="#555" fill="none" stroke-width="2"/>
+            <polygon points="50,10 15,68 85,68" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <line x1="50" y1="50" x2="85" y2="68" stroke="#ff9900" stroke-dasharray="3" stroke-width="2"/>
+            <text x="61" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
+            <text x="50" y="82" fill="#ffcc00" font-size="14" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="22" y="42" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">c</text>
+            <text x="70" y="42" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">b</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ТРЕУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator"><span class="math-var">a</span> &middot; <span class="math-var">b</span> &middot; <span class="math-var">c</span></span><span class="denominator">4<span class="math-var">R</span></span></div>
+          </div>
+          <p class="description">Произведение сторон, делённое на 4 радиуса описанной окружности.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПРЯМОУГОЛЬНЫЙ<br>ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,80 80,80 20,20" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="20" y1="20" x2="20" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <polyline points="20,70 30,70 30,80" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <text x="10" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">b</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПРЯМОУГОЛЬНЫЙ ТР.</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &middot; <span class="math-var">a</span> &middot; <span class="math-var">b</span>
+          </div>
+          <p class="description">Площадь прямоугольного треугольника равна половине произведения его катетов.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПРЯМОУГОЛЬНЫЙ<br>ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="10,80 90,80 50,40" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="50" y1="40" x2="50" y2="80" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
+            <line x1="10" y1="80" x2="90" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <polygon points="50,40 54,44 50,48 46,44" stroke="#555" fill="none" stroke-width="1.5"/>
+            <polyline points="46,80 46,76 50,76" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">c</text>
+            <text x="55" y="65" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">h<tspan font-size="10" dy="5">c</tspan></text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПРЯМОУГОЛЬНЫЙ ТР.</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &middot; <span class="math-var">c</span> &middot; <span class="math-var">h<sub>c</sub></span>
+          </div>
+          <p class="description">Половина произведения гипотенузы на высоту, проведённую к ней.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПРАВИЛЬНЫЙ<br>ТРЕУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="50,15 15,75 85,75" stroke="#ff9900" fill="none" stroke-width="3"/>
+            <text x="50" y="90" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <line x1="28" y1="45" x2="36" y2="45" stroke="#ff9900" stroke-width="2"/>
+            <line x1="64" y1="45" x2="72" y2="45" stroke="#ff9900" stroke-width="2"/>
+            <line x1="48" y1="70" x2="48" y2="80" stroke="#ff9900" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПРАВИЛЬНЫЙ ТР.</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator"><span class="math-var">a</span><sup>2</sup><span class="sqrt"><span class="sqrt-sign">&radic;</span><span class="sqrt-content">3</span></span></span><span class="denominator">4</span></div>
+          </div>
+          <p class="description">Квадрат стороны, умноженный на корень из трёх и делённый на 4.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПРЯМОУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="15,25 85,25 85,75 15,75" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="15" y1="75" x2="85" y2="75" stroke="#ff9900" stroke-width="3"/>
+            <line x1="85" y1="25" x2="85" y2="75" stroke="#ff9900" stroke-width="3"/>
+            <text x="50" y="90" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="89" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПРЯМОУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <span class="math-var">a</span> &middot; <span class="math-var">b</span>
+          </div>
+          <p class="description">Площадь прямоугольника равна произведению его длины на ширину.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,80 80,80 95,20 35,20" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="35" y1="20" x2="35" y2="80" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
+            <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <text x="40" y="55" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">h</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <span class="math-var">a</span> &middot; <span class="math-var">h<sub>a</sub></span>
+          </div>
+          <p class="description">Произведение стороны на высоту, проведённую к этой стороне.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,80 80,80 95,20 35,20" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <line x1="20" y1="80" x2="35" y2="20" stroke="#ff9900" stroke-width="3"/>
+            <path d="M 35 80 A 15 15 0 0 0 25 60" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <text x="38" y="73" fill="#ffcc00" font-size="14">&gamma;</text>
+            <text x="15" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <span class="math-var">a</span> &middot; <span class="math-var">b</span> &middot; sin &gamma;
+          </div>
+          <p class="description">Произведение двух смежных сторон на синус угла между ними.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,80 80,80 95,20 35,20" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="20" y1="80" x2="95" y2="20" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="80" y1="80" x2="35" y2="20" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <path d="M 66 43 Q 57.5 35 49 43" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <text x="54" y="38" fill="#ffcc00" font-size="14">&gamma;</text>
+            <text x="25" y="65" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">1</tspan></text>
+            <text x="80" y="65" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">2</tspan></text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &middot; <span class="math-var">d<sub>1</sub></span> &middot; <span class="math-var">d<sub>2</sub></span> &middot; sin &gamma;
+          </div>
+          <p class="description">Половина произведения диагоналей на синус угла между ними.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ВЫПУКЛЫЙ<br>ЧЕТЫРЕХУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="60,20 90,50 40,80 20,50" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="20" y1="50" x2="90" y2="50" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="60" y1="20" x2="40" y2="80" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <path d="M 60 50 A 10 10 0 0 0 53.1 40.5" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <text x="63" y="43" fill="#ffcc00" font-size="14">&gamma;</text>
+            <text x="25" y="45" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">1</tspan></text>
+            <text x="65" y="75" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">2</tspan></text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ВЫПУКЛЫЙ<br>ЧЕТЫРЕХУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &middot; <span class="math-var">d<sub>1</sub></span> &middot; <span class="math-var">d<sub>2</sub></span> &middot; sin &gamma;
+          </div>
+          <p class="description">Половина произведения диагоналей на синус угла между ними.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">РОМБ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="50,10 90,50 50,90 10,50" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="10" y1="50" x2="90" y2="50" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="50" y1="10" x2="50" y2="90" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <text x="60" y="45" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">1</tspan></text>
+            <text x="35" y="70" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">2</tspan></text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">РОМБ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">1</span><span class="denominator">2</span></div> &middot; <span class="math-var">d<sub>1</sub></span> &middot; <span class="math-var">d<sub>2</sub></span>
+          </div>
+          <p class="description">Половина произведения его диагоналей.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">РОМБ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,80 70,80 90,30 40,30" stroke="#ff9900" fill="none" stroke-width="3"/>
+            <path d="M 35 80 A 15 15 0 0 0 28 60" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <text x="40" y="75" fill="#ffcc00" font-size="14">&gamma;</text>
+            <text x="45" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">РОМБ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <span class="math-var">a</span><sup>2</sup> &middot; sin &gamma;
+          </div>
+          <p class="description">Произведение квадрата стороны на синус угла между сторонами.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">КВАДРАТ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,20 80,20 80,80 20,80" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">КВАДРАТ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <span class="math-var">a</span><sup>2</sup>
+          </div>
+          <p class="description">Квадрат его стороны.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">КВАДРАТ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,20 80,20 80,80 20,80" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="20" y1="80" x2="80" y2="20" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
+            <text x="45" y="45" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">d</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">КВАДРАТ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator"><span class="math-var">d</span><sup>2</sup></span><span class="denominator">2</span></div>
+          </div>
+          <p class="description">Квадрат диагонали, делённый на два.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ТРАПЕЦИЯ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,80 80,80 70,30 30,30" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
+            <line x1="30" y1="30" x2="70" y2="30" stroke="#ff9900" stroke-width="3"/>
+            <line x1="30" y1="30" x2="30" y2="80" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="50" y="25" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="20" y="60" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">h</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ТРАПЕЦИЯ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator"><span class="math-var">a</span> + <span class="math-var">b</span></span><span class="denominator">2</span></div> &middot; <span class="math-var">h</span>
+          </div>
+          <p class="description">Произведение полусуммы оснований на высоту.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ТРАПЕЦИЯ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="20,80 80,80 70,30 30,30" stroke="#555" fill="none" stroke-width="2"/>
+            <line x1="25" y1="55" x2="75" y2="55" stroke="#ff9900" stroke-width="3"/>
+            <line x1="30" y1="30" x2="30" y2="80" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <text x="50" y="50" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">m</text>
+            <text x="20" y="60" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">h</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ТРАПЕЦИЯ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <span class="math-var">m</span> &middot; <span class="math-var">h</span>
+          </div>
+          <p class="description">Произведение её средней линии на высоту.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <polygon points="85,50 67.5,80.3 32.5,80.3 15,50 32.5,19.7 67.5,19.7" stroke="#ff9900" fill="none" stroke-width="3"/>
+            <text x="50" y="15" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">3<span class="sqrt"><span class="sqrt-sign">&radic;</span><span class="sqrt-content">3</span></span></span><span class="denominator">2</span></div> &middot; <span class="math-var">a</span><sup>2</sup>
+          </div>
+          <p class="description">Три корня из трёх пополам, умноженные на квадрат стороны.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <circle cx="50" cy="50" r="35" stroke="#555" fill="none" stroke-width="2"/>
+            <polygon points="85,50 67.5,80.3 32.5,80.3 15,50 32.5,19.7 67.5,19.7" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <line x1="50" y1="50" x2="85" y2="50" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <text x="65" y="45" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">3<span class="sqrt"><span class="sqrt-sign">&radic;</span><span class="sqrt-content">3</span></span></span><span class="denominator">2</span></div> &middot; <span class="math-var">R</span><sup>2</sup>
+          </div>
+          <p class="description">Три корня из трёх пополам, умноженные на квадрат радиуса описанной окружности.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <circle cx="50" cy="50" r="30.3" stroke="#555" fill="none" stroke-width="2"/>
+            <polygon points="85,50 67.5,80.3 32.5,80.3 15,50 32.5,19.7 67.5,19.7" stroke="#ff9900" fill="none" stroke-width="2"/>
+            <line x1="50" y1="50" x2="50" y2="80.3" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
+            <polyline points="50,76.3 54,76.3 54,80.3" stroke="#ff9900" fill="none" stroke-width="1.5"/>
+            <text x="55" y="65" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">r</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
+        <div class="card-body">
+          <div class="formula" style="font-size: 1.4em;">
+            S = 2<span class="sqrt"><span class="sqrt-sign">&radic;</span><span class="sqrt-content">3</span></span> &middot; <span class="math-var">r</span><sup>2</sup>
+          </div>
+          <p class="description">Два корня из трёх, умноженные на квадрат радиуса вписанной окружности.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">КРУГ</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <circle cx="50" cy="50" r="40" stroke="#555" fill="none" stroke-width="2"/>
+            <circle cx="50" cy="50" r="3" fill="#ff9900"/>
+            <line x1="50" y1="50" x2="90" y2="50" stroke="#ff9900" stroke-width="3"/>
+            <text x="65" y="45" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">КРУГ</div>
+        <div class="card-body">
+          <div class="formula">
+            S = &pi; &middot; <span class="math-var">R</span><sup>2</sup>
+          </div>
+          <p class="description">Произведение числа &pi; на квадрат радиуса.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard">
+      <div class="front">
+        <div class="card-header">КРУГОВОЙ СЕКТОР</div>
+        <div class="svg-container">
+          <svg viewBox="0 0 100 100" width="120" height="120">
+            <circle cx="50" cy="50" r="40" stroke="#555" fill="none" stroke-width="2"/>
+            <path d="M 50 50 L 90 50 A 40 40 0 0 0 70 15 Z" fill="rgba(255, 102, 0, 0.2)" stroke="#ff9900" stroke-width="2"/>
+            <text x="60" y="40" fill="#ffcc00" font-size="14">&alpha;</text>
+            <text x="70" y="65" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
+          </svg>
+        </div>
+        <div class="question-text">Как найти площадь?</div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+      <div class="back">
+        <div class="card-header">КРУГОВОЙ СЕКТОР</div>
+        <div class="card-body">
+          <div class="formula">
+            S = <div class="fraction"><span class="numerator">&pi; &middot; <span class="math-var">R</span><sup>2</sup> &middot; &alpha;</span><span class="denominator">360&deg;</span></div>
+          </div>
+          <p class="description">Произведение площади круга на угол сектора, делённое на 360&deg;.</p>
+        </div>
+        <div class="card-footer">Шкатулка математических интерактивов</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
