@@ -115,20 +115,20 @@
     font-weight: normal;
   }
 
-  /* Исправленные стили для корня */
+  /* --- ИСПРАВЛЕННЫЙ ЖЕЛЕЗОБЕТОННЫЙ КОРЕНЬ --- */
   .sqrt {
     white-space: nowrap;
-    display: inline-block;
   }
   .sqrt-sign {
+    font-family: Arial, sans-serif;
     font-size: 1.1em;
-    margin-right: -1px;
-    vertical-align: middle;
+    margin-right: -0.05em; /* Пододвигаем крышу плотнее к знаку */
   }
   .sqrt-content {
-    border-top: 2px solid #ff6600;
-    padding-top: 2px;
-    display: inline-block;
+    text-decoration: overline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #ff6600;
+    text-decoration-skip-ink: none; /* Чтобы линия не прерывалась на скобках */
   }
 
   sub, sup {
@@ -435,7 +435,7 @@
             <line x1="15" y1="75" x2="85" y2="75" stroke="#ff9900" stroke-width="3"/>
             <line x1="85" y1="25" x2="85" y2="75" stroke="#ff9900" stroke-width="3"/>
             <text x="50" y="90" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
-            <text x="89" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="91" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
