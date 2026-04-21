@@ -8,6 +8,46 @@
     background-color: #121212;
     padding: 40px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+  }
+
+  /* --- СТИЛИ ДЛЯ ЛОГОТИПА --- */
+  .logo-container {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    z-index: 100;
+  }
+
+  .logo-img {
+    width: 75px; 
+    height: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255, 102, 0, 0.4)); 
+  }
+
+  .logo-img:hover {
+    transform: scale(1.1); 
+    filter: drop-shadow(0 0 15px rgba(255, 102, 0, 0.9)); 
+  }
+
+  /* --- СТИЛИ ДЛЯ КНОПКИ ЗВУКА --- */
+  .sound-control {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    z-index: 100;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease;
+    fill: #ffcc00;
+    filter: drop-shadow(0 0 5px rgba(255, 102, 0, 0.4));
+  }
+
+  .sound-control:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(255, 102, 0, 0.9));
   }
 
   .main-title {
@@ -108,6 +148,7 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
+    flex-wrap: wrap;
   }
 
   .math-var {
@@ -116,6 +157,7 @@
     font-weight: normal;
   }
 
+  /* Железобетонный корень */
   .sqrt {
     white-space: nowrap;
   }
@@ -177,16 +219,33 @@
   }
   @media (max-width: 600px) {
     .card-grid { grid-template-columns: 1fr; }
+    .logo-container { top: 15px; left: 15px; }
+    .logo-img { width: 50px; }
+    .sound-control { top: 15px; right: 15px; width: 30px; height: 30px; }
+    .main-title { font-size: 1.8em; margin-top: 45px; }
   }
 </style>
 </head>
 <body>
 
+<a href="https://t.me/interactiv_matematika" target="_blank" class="logo-container" title="Перейти в Telegram-канал">
+  <img src="logo.png" alt="Шкатулка математических интерактивов" class="logo-img">
+</a>
+
+<div class="sound-control" id="sound-toggle" title="Включить/выключить звук">
+  <svg id="icon-sound-on" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>
+  <svg id="icon-sound-off" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+  </svg>
+</div>
+
 <h1 class="main-title">Площади фигур</h1>
 
 <div class="card-grid">
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ТРЕУГОЛЬНИК</div>
@@ -194,10 +253,10 @@
           <svg viewBox="0 0 100 100" width="120" height="120">
             <polygon points="10,80 90,80 30,20" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="30" y1="20" x2="30" y2="80" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
-            <text x="35" y="55" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">h</text>
-            <text x="43" y="60" fill="#ffcc00" font-size="10" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="35" y="55" fill="#ffcc00" font-size="14" class="math-var">h</text>
+            <text x="43" y="60" fill="#ffcc00" font-size="10" class="math-var">a</text>
             <line x1="10" y1="80" x2="90" y2="80" stroke="#ff9900" stroke-width="3"/>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -216,7 +275,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ТРЕУГОЛЬНИК</div>
@@ -227,8 +286,8 @@
             <line x1="10" y1="80" x2="90" y2="80" stroke="#ff9900" stroke-width="3"/>
             <path d="M 25 80 A 15 15 0 0 0 16.7 66.6" stroke="#ff9900" fill="none" stroke-width="2"/>
             <text x="35" y="75" fill="#ffcc00" font-size="14">&gamma;</text>
-            <text x="15" y="50" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="15" y="50" fill="#ffcc00" font-size="16" class="math-var">b</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -247,16 +306,16 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ТРЕУГОЛЬНИК</div>
         <div class="svg-container">
           <svg viewBox="0 0 100 100" width="120" height="120">
             <polygon points="10,80 90,80 40,20" stroke="#ff9900" fill="none" stroke-width="3"/>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
-            <text x="15" y="50" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
-            <text x="75" y="50" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">c</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
+            <text x="15" y="50" fill="#ffcc00" font-size="16" class="math-var">b</text>
+            <text x="75" y="50" fill="#ffcc00" font-size="16" class="math-var">c</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -275,7 +334,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ТРЕУГОЛЬНИК</div>
@@ -284,8 +343,8 @@
             <polygon points="10,80 90,80 50,10" stroke="#ff9900" fill="none" stroke-width="2"/>
             <circle cx="50" cy="58" r="22" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="50" y1="58" x2="50" y2="80" stroke="#ff9900" stroke-width="2"/>
-            <text x="55" y="72" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">r</text>
-            <text x="50" y="98" fill="#ffcc00" font-size="13" text-anchor="middle" font-family="Times New Roman" font-style="italic">P = a + b + c</text>
+            <text x="55" y="72" fill="#ffcc00" font-size="16" class="math-var">r</text>
+            <text x="50" y="98" fill="#ffcc00" font-size="13" text-anchor="middle" class="math-var">P = a + b + c</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -304,7 +363,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ТРЕУГОЛЬНИК</div>
@@ -313,10 +372,10 @@
             <circle cx="50" cy="50" r="40" stroke="#555" fill="none" stroke-width="2"/>
             <polygon points="50,10 15,68 85,68" stroke="#ff9900" fill="none" stroke-width="2"/>
             <line x1="50" y1="50" x2="85" y2="68" stroke="#ff9900" stroke-dasharray="3" stroke-width="2"/>
-            <text x="61" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
-            <text x="50" y="82" fill="#ffcc00" font-size="14" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
-            <text x="22" y="42" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">c</text>
-            <text x="70" y="42" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="61" y="55" fill="#ffcc00" font-size="16" class="math-var">R</text>
+            <text x="50" y="82" fill="#ffcc00" font-size="14" text-anchor="middle" class="math-var">a</text>
+            <text x="22" y="42" fill="#ffcc00" font-size="14" class="math-var">c</text>
+            <text x="70" y="42" fill="#ffcc00" font-size="14" class="math-var">b</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -335,7 +394,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПРЯМОУГОЛЬНЫЙ<br>ТРЕУГОЛЬНИК</div>
@@ -345,8 +404,8 @@
             <line x1="20" y1="20" x2="20" y2="80" stroke="#ff9900" stroke-width="3"/>
             <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
             <polyline points="20,70 30,70 30,80" stroke="#ff9900" fill="none" stroke-width="2"/>
-            <text x="10" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">a</text>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="10" y="55" fill="#ffcc00" font-size="16" class="math-var">a</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">b</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -365,7 +424,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПРЯМОУГОЛЬНЫЙ<br>ТРЕУГОЛЬНИК</div>
@@ -376,8 +435,8 @@
             <line x1="10" y1="80" x2="90" y2="80" stroke="#ff9900" stroke-width="3"/>
             <polygon points="50,40 54,44 50,48 46,44" stroke="#555" fill="none" stroke-width="1.5"/>
             <polyline points="46,80 46,76 50,76" stroke="#ff9900" fill="none" stroke-width="2"/>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">c</text>
-            <text x="55" y="65" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">h<tspan font-size="10" dy="5">c</tspan></text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">c</text>
+            <text x="55" y="65" fill="#ffcc00" font-size="16" class="math-var">h<tspan font-size="10" dy="5">c</tspan></text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -396,14 +455,14 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПРАВИЛЬНЫЙ<br>ТРЕУГОЛЬНИК</div>
         <div class="svg-container">
           <svg viewBox="0 0 100 100" width="120" height="120">
             <polygon points="50,15 15,75 85,75" stroke="#ff9900" fill="none" stroke-width="3"/>
-            <text x="50" y="90" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="50" y="90" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
             <line x1="28" y1="45" x2="36" y2="45" stroke="#ff9900" stroke-width="2"/>
             <line x1="64" y1="45" x2="72" y2="45" stroke="#ff9900" stroke-width="2"/>
             <line x1="48" y1="70" x2="48" y2="80" stroke="#ff9900" stroke-width="2"/>
@@ -425,7 +484,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПРЯМОУГОЛЬНИК</div>
@@ -434,8 +493,8 @@
             <polygon points="15,25 85,25 85,75 15,75" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="15" y1="75" x2="85" y2="75" stroke="#ff9900" stroke-width="3"/>
             <line x1="85" y1="25" x2="85" y2="75" stroke="#ff9900" stroke-width="3"/>
-            <text x="50" y="90" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
-            <text x="91" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
+            <text x="50" y="90" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
+            <text x="91" y="55" fill="#ffcc00" font-size="16" class="math-var">b</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -454,7 +513,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
@@ -463,8 +522,8 @@
             <polygon points="20,80 80,80 95,20 35,20" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="35" y1="20" x2="35" y2="80" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
             <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
-            <text x="40" y="55" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">h</text>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="40" y="55" fill="#ffcc00" font-size="14" class="math-var">h</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -483,7 +542,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
@@ -494,8 +553,8 @@
             <line x1="20" y1="80" x2="35" y2="20" stroke="#ff9900" stroke-width="3"/>
             <path d="M 35 80 A 15 15 0 0 0 25 60" stroke="#ff9900" fill="none" stroke-width="2"/>
             <text x="38" y="73" fill="#ffcc00" font-size="14">&gamma;</text>
-            <text x="15" y="55" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">b</text>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="15" y="55" fill="#ffcc00" font-size="16" class="math-var">b</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -514,7 +573,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПАРАЛЛЕЛОГРАММ</div>
@@ -525,8 +584,8 @@
             <line x1="80" y1="80" x2="35" y2="20" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
             <path d="M 66 43 Q 57.5 35 49 43" stroke="#ff9900" fill="none" stroke-width="2"/>
             <text x="54" y="38" fill="#ffcc00" font-size="14">&gamma;</text>
-            <text x="25" y="65" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">1</tspan></text>
-            <text x="80" y="65" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">2</tspan></text>
+            <text x="25" y="65" fill="#ffcc00" font-size="14" class="math-var">d<tspan font-size="8" dy="5">1</tspan></text>
+            <text x="80" y="65" fill="#ffcc00" font-size="14" class="math-var">d<tspan font-size="8" dy="5">2</tspan></text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -545,7 +604,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ВЫПУКЛЫЙ<br>ЧЕТЫРЕХУГОЛЬНИК</div>
@@ -556,8 +615,8 @@
             <line x1="60" y1="20" x2="40" y2="80" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
             <path d="M 60 50 A 10 10 0 0 0 53.1 40.5" stroke="#ff9900" fill="none" stroke-width="2"/>
             <text x="63" y="43" fill="#ffcc00" font-size="14">&gamma;</text>
-            <text x="25" y="45" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">1</tspan></text>
-            <text x="65" y="75" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">2</tspan></text>
+            <text x="25" y="45" fill="#ffcc00" font-size="14" class="math-var">d<tspan font-size="8" dy="5">1</tspan></text>
+            <text x="65" y="75" fill="#ffcc00" font-size="14" class="math-var">d<tspan font-size="8" dy="5">2</tspan></text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -576,7 +635,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">РОМБ</div>
@@ -585,8 +644,8 @@
             <polygon points="50,10 90,50 50,90 10,50" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="10" y1="50" x2="90" y2="50" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
             <line x1="50" y1="10" x2="50" y2="90" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
-            <text x="60" y="45" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">1</tspan></text>
-            <text x="35" y="70" fill="#ffcc00" font-size="14" font-family="Times New Roman" font-style="italic">d<tspan font-size="8" dy="5">2</tspan></text>
+            <text x="60" y="45" fill="#ffcc00" font-size="14" class="math-var">d<tspan font-size="8" dy="5">1</tspan></text>
+            <text x="35" y="70" fill="#ffcc00" font-size="14" class="math-var">d<tspan font-size="8" dy="5">2</tspan></text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -605,7 +664,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">РОМБ</div>
@@ -614,7 +673,7 @@
             <polygon points="20,80 70,80 90,30 40,30" stroke="#ff9900" fill="none" stroke-width="3"/>
             <path d="M 35 80 A 15 15 0 0 0 28 60" stroke="#ff9900" fill="none" stroke-width="2"/>
             <text x="40" y="75" fill="#ffcc00" font-size="14">&gamma;</text>
-            <text x="45" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="45" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -633,7 +692,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">КВАДРАТ</div>
@@ -641,7 +700,7 @@
           <svg viewBox="0 0 100 100" width="120" height="120">
             <polygon points="20,20 80,20 80,80 20,80" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -660,7 +719,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">КВАДРАТ</div>
@@ -668,7 +727,7 @@
           <svg viewBox="0 0 100 100" width="120" height="120">
             <polygon points="20,20 80,20 80,80 20,80" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="20" y1="80" x2="80" y2="20" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
-            <text x="45" y="45" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">d</text>
+            <text x="45" y="45" fill="#ffcc00" font-size="16" class="math-var">d</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -687,7 +746,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ТРАПЕЦИЯ</div>
@@ -697,9 +756,9 @@
             <line x1="20" y1="80" x2="80" y2="80" stroke="#ff9900" stroke-width="3"/>
             <line x1="30" y1="30" x2="70" y2="30" stroke="#ff9900" stroke-width="3"/>
             <line x1="30" y1="30" x2="30" y2="80" stroke="#ff9900" stroke-width="3" stroke-dasharray="4"/>
-            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">b</text>
-            <text x="50" y="25" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
-            <text x="20" y="60" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">h</text>
+            <text x="50" y="95" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">b</text>
+            <text x="50" y="25" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
+            <text x="20" y="60" fill="#ffcc00" font-size="16" class="math-var">h</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -718,7 +777,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ТРАПЕЦИЯ</div>
@@ -727,8 +786,8 @@
             <polygon points="20,80 80,80 70,30 30,30" stroke="#555" fill="none" stroke-width="2"/>
             <line x1="25" y1="55" x2="75" y2="55" stroke="#ff9900" stroke-width="3"/>
             <line x1="30" y1="30" x2="30" y2="80" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
-            <text x="50" y="50" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">m</text>
-            <text x="20" y="60" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">h</text>
+            <text x="50" y="50" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">m</text>
+            <text x="20" y="60" fill="#ffcc00" font-size="16" class="math-var">h</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -747,14 +806,14 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
         <div class="svg-container">
           <svg viewBox="0 0 100 100" width="120" height="120">
             <polygon points="85,50 67.5,80.3 32.5,80.3 15,50 32.5,19.7 67.5,19.7" stroke="#ff9900" fill="none" stroke-width="3"/>
-            <text x="50" y="15" fill="#ffcc00" font-size="16" text-anchor="middle" font-family="Times New Roman" font-style="italic">a</text>
+            <text x="50" y="15" fill="#ffcc00" font-size="16" text-anchor="middle" class="math-var">a</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -773,7 +832,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
@@ -782,7 +841,7 @@
             <circle cx="50" cy="50" r="35" stroke="#555" fill="none" stroke-width="2"/>
             <polygon points="85,50 67.5,80.3 32.5,80.3 15,50 32.5,19.7 67.5,19.7" stroke="#ff9900" fill="none" stroke-width="2"/>
             <line x1="50" y1="50" x2="85" y2="50" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
-            <text x="65" y="45" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
+            <text x="65" y="45" fill="#ffcc00" font-size="16" class="math-var">R</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -801,7 +860,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">ПРАВИЛЬНЫЙ<br>ШЕСТИУГОЛЬНИК</div>
@@ -811,7 +870,7 @@
             <polygon points="85,50 67.5,80.3 32.5,80.3 15,50 32.5,19.7 67.5,19.7" stroke="#ff9900" fill="none" stroke-width="2"/>
             <line x1="50" y1="50" x2="50" y2="80.3" stroke="#ff9900" stroke-width="2" stroke-dasharray="4"/>
             <polyline points="50,76.3 54,76.3 54,80.3" stroke="#ff9900" fill="none" stroke-width="1.5"/>
-            <text x="55" y="65" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">r</text>
+            <text x="55" y="65" fill="#ffcc00" font-size="16" class="math-var">r</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -830,7 +889,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">КРУГ</div>
@@ -839,7 +898,7 @@
             <circle cx="50" cy="50" r="40" stroke="#555" fill="none" stroke-width="2"/>
             <circle cx="50" cy="50" r="3" fill="#ff9900"/>
             <line x1="50" y1="50" x2="90" y2="50" stroke="#ff9900" stroke-width="3"/>
-            <text x="65" y="45" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
+            <text x="65" y="45" fill="#ffcc00" font-size="16" class="math-var">R</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -858,7 +917,7 @@
     </div>
   </div>
 
-  <div class="card-container" onclick="this.classList.toggle('flipped')">
+  <div class="card-container">
     <div class="flashcard">
       <div class="front">
         <div class="card-header">КРУГОВОЙ СЕКТОР</div>
@@ -867,7 +926,7 @@
             <circle cx="50" cy="50" r="40" stroke="#555" fill="none" stroke-width="2"/>
             <path d="M 50 50 L 90 50 A 40 40 0 0 0 70 15 Z" fill="rgba(255, 102, 0, 0.2)" stroke="#ff9900" stroke-width="2"/>
             <text x="60" y="40" fill="#ffcc00" font-size="14">&alpha;</text>
-            <text x="70" y="65" fill="#ffcc00" font-size="16" font-family="Times New Roman" font-style="italic">R</text>
+            <text x="70" y="65" fill="#ffcc00" font-size="16" class="math-var">R</text>
           </svg>
         </div>
         <div class="question-text">Как найти площадь?</div>
@@ -887,6 +946,65 @@
   </div>
 
 </div>
+
+<script>
+  let soundEnabled = true;
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  function playFlipSound() {
+    if (!soundEnabled) return;
+    initAudio();
+    
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+    
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.1);
+  }
+
+  const soundToggle = document.getElementById('sound-toggle');
+  const iconOn = document.getElementById('icon-sound-on');
+  const iconOff = document.getElementById('icon-sound-off');
+
+  soundToggle.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+      iconOn.style.display = 'block';
+      iconOff.style.display = 'none';
+      initAudio();
+    } else {
+      iconOn.style.display = 'none';
+      iconOff.style.display = 'block';
+    }
+  });
+
+  // Привязка клика к карточкам (переворот + звук)
+  document.querySelectorAll('.card-container').forEach(card => {
+    card.addEventListener('click', function() {
+      this.classList.toggle('flipped');
+      playFlipSound();
+    });
+  });
+</script>
 
 </body>
 </html>
